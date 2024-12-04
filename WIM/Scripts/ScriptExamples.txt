@@ -1,0 +1,81 @@
+Expand WIM info files
+Get-WindowsImage -ImagePath "D:\WIM\install.wim" | ForEach-Object { Export-WindowsImage -SourceImagePath "D:\WIM\install.wim" -SourceIndex $_.ImageIndex -DestinationImagePath "D:\ISO\$($_.ImageName).WIM" -CheckIntegrity }
+NTFS 64k clusters with large file records
+format D: /FS:NTFS /Q /L /A:64K
+NTFS 4k clusters with compression with large file records
+format D: /FS:NTFS /Q /C /L /A:4096
+
+Win10 Setup add language pack x64
+Dism /mount-image /imagefile:"D:\WIM\ISOSource\x64\sources\boot.wim" /index:2 /mountdir:D:\Temp
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\lp.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\WinPE-Setup-Server.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\et-ee\WinPE-Setup-Server_et-ee.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-Setup_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-Setup-Client_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-Setup-Server_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-EnhancedStorage_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-Scripting_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-SecureStartup_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-SRT_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-WDS-Tools_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-WMI_en-us.cab"
+Dism /image:D:\Temp /gen-langINI /distribution:D:\WIM\ISOSource\x64
+Xcopy D:\WIM\ISOSource\x64\sources\lang.ini D:\Temp\Sources\lang.ini /Y
+Dism /unmount-image /mountdir:D:\Temp /commit
+
+Win10 Setup add language pack x86
+Dism /mount-image /imagefile:"D:\WIM\ISOSource\x86\sources\boot.wim" /index:2 /mountdir:D:\Temp
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\lp.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\WinPE-Setup-Server.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\et-ee\WinPE-Setup-Server_et-ee.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-Setup_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-Setup-Client_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-Setup-Server_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-EnhancedStorage_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-Scripting_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-SecureStartup_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-SRT_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-WDS-Tools_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-WMI_en-us.cab"
+Dism /image:D:\Temp /gen-langINI /distribution:D:\WIM\ISOSource\x86
+Xcopy D:\WIM\ISOSource\x86\sources\lang.ini D:\Temp\Sources\lang.ini /Y
+Dism /unmount-image /mountdir:D:\Temp /commit
+
+Win8 Setup add language pack x64
+Dism /mount-image /imagefile:"D:\WIM\ISOSource\NT60x64\sources\boot.wim" /index:2 /mountdir:D:\Temp
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\lp.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\WinPE-Setup-Server.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\et-ee\WinPE-Setup-Server_et-ee.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-Setup_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-Setup-Client_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-Setup-Server_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-EnhancedStorage_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-Scripting_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-SecureStartup_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-SRT_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-WDS-Tools_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-WMI_en-us.cab"
+Dism /image:D:\Temp /gen-langINI /distribution:D:\WIM\ISOSource\NT60x64
+Xcopy D:\WIM\ISOSource\NT60x64\sources\lang.ini D:\Temp\Sources\lang.ini /Y
+Dism /unmount-image /mountdir:D:\Temp /commit
+
+Win8 Setup add language pack x86
+Dism /mount-image /imagefile:"D:\WIM\ISOSource\NT60x86\sources\boot.wim" /index:2 /mountdir:D:\Temp
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\lp.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\WinPE-Setup-Server.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\et-ee\WinPE-Setup-Server_et-ee.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-Setup_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-Setup-Client_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-Setup-Server_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-EnhancedStorage_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-Scripting_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-SecureStartup_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-SRT_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-WDS-Tools_en-us.cab"
+Dism /image:D:\Temp /add-package /packagepath:"C:\Program Files (x86)\Windows Kits\8.0\Assessment and Deployment Kit\Windows Preinstallation Environment\x86\WinPE_OCs\en-us\WinPE-WMI_en-us.cab"
+Dism /image:D:\Temp /gen-langINI /distribution:D:\WIM\ISOSource\NT60x86
+Xcopy D:\WIM\ISOSource\NT60x86\sources\lang.ini D:\Temp\Sources\lang.ini /Y
+Dism /unmount-image /mountdir:D:\Temp /commit
+
+Manual ISO build:
+"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\oscdimg.exe" -m -o -u2 -udfver102 -bootdata:2p0,e,bD:\WIM\ISOSource\x64\boot\etfsboot.com#pEF,e,bD:\WIM\ISOSource\x64\efi\microsoft\boot\efisys.bin D:\WIM\ISOSource\x64 D:\WIM\Completed\final.iso
